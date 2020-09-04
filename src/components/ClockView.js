@@ -3,11 +3,19 @@ import { StyleSheet, Text, View } from "react-native";
 
 const ClockView = (props) => {
   return (<View style={styles.clockviewContainer}>
-    <Text style={styles.clockViewHeader}>{props.time.type} Timer</Text>
+    <Text style={styles.clockViewHeader}>{props.time.type} Time</Text>
     <Text style={styles.timeText}>
-      {props.time.minutes}:{props.time.seconds}
+      {props.time.minutes}:{padZero(props.time.seconds)}
     </Text>
   </View>);
+};
+
+const padZero = (number) => {
+  if (number.toString().length === 1) {
+    return '0' + number.toString();
+  } else {
+    return number;
+  }
 };
 
 
