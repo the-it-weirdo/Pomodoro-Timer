@@ -11,16 +11,17 @@ export default class Timer extends React.Component {
     super(props);
 
     this.state = {
+      timerRunning: false,
       current: {
         type: "Work",
-        minutes: 1,
-        seconds: 0,
+        minutes: 0,
+        seconds: 20,
       },
       config: {
         work: {
           type: "Work",
-          minutes: 1,
-          seconds: 0,
+          minutes: 0,
+          seconds: 20,
         },
         break: {
           type: "Break",
@@ -31,11 +32,28 @@ export default class Timer extends React.Component {
     };
 
     this.countdown = this.countdown.bind(this);
-    this.countdown();
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
+  }
+
+  startTimer() {
+    this.setState({ timerRunning: true }, () => {
+      this.countdown();
+    });
+  }
+
+  stopTimer() {
+    console.log("Stop Timer");
+    this.setState({ timerRunning: false });
+  }
+
+  resetTimer() {
+    this.setState({ timerRunning: false, current: this.state.config.work });
   }
 
   async countdown() {
-    while (true) {
+    while (this.state.timerRunning) {
       if (
         this.state.current.seconds === 0 &&
         this.state.current.minutes === 0

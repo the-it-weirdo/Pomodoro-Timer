@@ -8,8 +8,33 @@ import {
   StatusBar,
 } from "react-native";
 import Timer from "./src/components/Timer";
+import Controls from "./src/components/Controls";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  startStopButtonPress = () => {
+    if (this._timer.state.timerRunning) {
+      this.stopTimer();
+    } else {
+      this.startTimer();
+    }
+  };
+
+  resetButtonPress = () => {
+    this._timer.resetTimer();
+  };
+
+  startTimer = () => {
+    this._timer.startTimer();
+  };
+
+  stopTimer = () => {
+    this._timer.stopTimer();
+  };
+
   render() {
     return (
       <>
@@ -21,7 +46,15 @@ export default class App extends React.Component {
           >
             <View style={styles.container}>
               <Text style={styles.appHeaderText}>Pomodoro Timer</Text>
-              <Timer />
+              <Timer
+                ref={(ref) => {
+                  this._timer = ref;
+                }}
+              />
+              <Controls
+                onStartPausePress={this.startStopButtonPress}
+                onResetPress={this.resetButtonPress}
+              />
             </View>
           </ScrollView>
         </SafeAreaView>
