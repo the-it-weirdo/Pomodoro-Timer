@@ -3,7 +3,7 @@ import { StyleSheet, Button, View } from "react-native";
 import PropTypes from "prop-types";
 
 export default class Controls extends React.Component {
-  static PropTypes = {
+  static propTypes = {
     onStartPausePress: PropTypes.func.isRequired,
     onResetPress: PropTypes.func.isRequired,
   };

@@ -9,10 +9,35 @@ import {
 } from "react-native";
 import Timer from "./src/components/Timer";
 import Controls from "./src/components/Controls";
+import ConfigTimer from "./src/components/ConfigTimer";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+
+    this.workTimerData = {
+      type: "Work",
+      onChangeMinute: (newMinute) => {
+        console.log(`Work Minute Changed. New Minute: ${newMinute}`);
+        this.updateWorkTime(newMinute, this._timer.state.config.work.seconds);
+      },
+      onChangeSecond: (newSecond) => {
+        console.log(`Work Second Changed. New Second: ${newSecond}`);
+        this.updateWorkTime(this._timer.state.config.work.minutes, newSecond);
+      },
+    };
+
+    this.breakTimerData = {
+      type: "Break",
+      onChangeMinute: (newMinute) => {
+        console.log(`Break Minute Changed. New Minute: ${newMinute}`);
+        this.updateBreakTime(newMinute, this._timer.state.config.break.seconds);
+      },
+      onChangeSecond: (newSecond) => {
+        console.log(`Break Second Changed. New Second: ${newSecond}`);
+        this.updateBreakTime(this._timer.state.config.break.minutes, newSecond);
+      },
+    };
   }
 
   startStopButtonPress = () => {
@@ -35,6 +60,24 @@ export default class App extends React.Component {
     this._timer.stopTimer();
   };
 
+  updateWorkTime(newMinutes, newSeconds) {
+    newConfig = {
+      type: "Work",
+      minutes: newMinutes,
+      seconds: newSeconds,
+    };
+    this._timer.updateWorkTime(newConfig);
+  }
+
+  updateBreakTime(newMinutes, newSeconds) {
+    newConfig = {
+      type: "Break",
+      minutes: newMinutes,
+      seconds: newSeconds,
+    };
+    this._timer.updateBreakTime(newConfig);
+  }
+
   render() {
     return (
       <>
@@ -54,6 +97,10 @@ export default class App extends React.Component {
               <Controls
                 onStartPausePress={this.startStopButtonPress}
                 onResetPress={this.resetButtonPress}
+              />
+              <ConfigTimer
+                workTimerData={this.workTimerData}
+                breakTimerData={this.breakTimerData}
               />
             </View>
           </ScrollView>

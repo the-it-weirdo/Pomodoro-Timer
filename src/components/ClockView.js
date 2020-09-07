@@ -13,7 +13,7 @@ const ClockView = (props) => {
   );
 };
 
-ClockView.PropTypes = {
+ClockView.propTypes = {
   time: PropTypes.shape({
     type: PropTypes.string.isRequired,
     minutes: PropTypes.number.isRequired,

@@ -52,6 +52,24 @@ export default class Timer extends React.Component {
     this.setState({ timerRunning: false, current: this.state.config.work });
   }
 
+  updateWorkTime(newConfig) {
+    this.setState({
+      config: {
+        work: newConfig,
+        break: this.state.config.break,
+      },
+    });
+  }
+
+  updateBreakTime(newConfig) {
+    this.setState({
+      config: {
+        break: newConfig,
+        work: this.state.config.work,
+      },
+    });
+  }
+
   async countdown() {
     while (this.state.timerRunning) {
       if (
