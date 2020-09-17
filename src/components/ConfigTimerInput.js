@@ -5,32 +5,27 @@ import PropTypes from "prop-types";
 const ConfigTimerInput = (props) => {
   return (
     <View style={style.configInputContainer}>
-      <Text style={style.typeText}>{props.data.type} Time: </Text>
+      <Text style={style.typeText}>{props.data.type} Time(MM:SS): </Text>
       <TextInput
         style={style.inputField}
-        placeholder="Minutes"
+        defaultValue={`${props.data.minutes}`}
         onChangeText={(text) => {
-          if (parseInt(text) === NaN) {
-            props.data.onChangeMinute(parseInt(0));
-          } else {
-            props.data.onChangeMinute(parseInt(text));
-          }
+          props.data.minutes = parseInt(text);
+          props.onUpdate(props.data);
         }}
-        defaultValue={""}
+        placeholder="Minutes"
         keyboardType="numeric"
       />
       <Text> : </Text>
       <TextInput
         style={style.inputField}
-        placeholder="Seconds"
+        defaultValue={`${props.data.seconds}`}
         onChangeText={(text) => {
-          if (parseInt(text) === NaN) {
-            props.data.onChangeSecond(parseInt(0));
-          } else {
-            props.data.onChangeSecond(parseInt(text));
-          }
+          props.data.seconds = parseInt(text);
+          props.onUpdate(props.data);
         }}
-        defaultValue={""}
+        maxLength={2}
+        placeholder="Seconds"
         keyboardType="numeric"
       />
     </View>
@@ -40,8 +35,8 @@ const ConfigTimerInput = (props) => {
 ConfigTimerInput.propTypes = {
   data: PropTypes.shape({
     type: PropTypes.string.isRequired,
-    onChangeMinute: PropTypes.func.isRequired,
-    onChangeSecond: PropTypes.func.isRequired,
+    minutes: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired,
   }),
 };
 

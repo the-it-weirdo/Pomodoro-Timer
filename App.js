@@ -9,44 +9,45 @@ import {
 } from "react-native";
 import CountdownTimer from "./src/components/CountdownTimer";
 import Controls from "./src/components/Controls";
-import ConfigTimer from "./src/components/ConfigTimer";
+import ConfigTimerInput from "./src/components/ConfigTimerInput";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.workTimerData = {
-      type: "Work",
-      onChangeMinute: (newMinute) => {
-        console.log(`Work Minute Changed. New Minute: ${newMinute}`);
-        this.updateWorkTime(newMinute, this._timer.state.config.work.seconds);
-      },
-      onChangeSecond: (newSecond) => {
-        console.log(`Work Second Changed. New Second: ${newSecond}`);
-        this.updateWorkTime(this._timer.state.config.work.minutes, newSecond);
-      },
-    };
-
-    this.breakTimerData = {
-      type: "Break",
-      onChangeMinute: (newMinute) => {
-        console.log(`Break Minute Changed. New Minute: ${newMinute}`);
-        this.updateBreakTime(newMinute, this._timer.state.config.break.seconds);
-      },
-      onChangeSecond: (newSecond) => {
-        console.log(`Break Second Changed. New Second: ${newSecond}`);
-        this.updateBreakTime(this._timer.state.config.break.minutes, newSecond);
-      },
-    };
-
     this.state = {
       currentTimerIdx: 0,
       timers: [
-        { minutes: 0, seconds: 10, type: "work" },
-        { minutes: 0, seconds: 5, type: "break" },
+        { minutes: 0, seconds: 10, type: "Work" },
+        { minutes: 0, seconds: 5, type: "Break" },
       ],
+      isTimerRunning: false,
+      isTimerPaused: false,
     };
   }
+
+  onUpdateTimerConfig = (timerObject) => {
+    timerObject = this.validateTimerObject(timerObject);
+    const newTimers = this.state.timers.map((timer) => {
+      if (timer.type === timerObject.type) {
+        return timerObject;
+      } else {
+        return timer;
+      }
+    });
+    this.setState({ timers: newTimers });
+  };
+
+  validateTimerObject = (timerObject) => {
+    if (isNaN(parseInt(timerObject.seconds))) {
+      timerObject.seconds = 0;
+    } else if (timerObject.seconds > 59) {
+      timerObject.seconds = 59;
+    } else if (isNaN(parseInt(timerObject.minutes))) {
+      timerObject.minutes = 0;
+    }
+    return timerObject;
+  };
 
   onCountdownComplete = () => {
     this.setState(
@@ -64,43 +65,35 @@ export default class App extends React.Component {
   };
 
   startStopButtonPress = () => {
-    if (this._timer.state.isRunning) {
+    if (this.state.isTimerPaused && !this.state.isTimerRunning) {
+      this.startTimer();
+    } else if (this.state.isTimerRunning) {
       this.stopTimer();
     } else {
+      // fresh start
+      this.resetTimer();
       this.startTimer();
     }
   };
 
-  resetButtonPress = () => {
-    this.stopTimer();
+  resetTimer = () => {
+    if (this.state.isTimerRunning) {
+      this.stopTimer();
+      this.setState({ currentTimerIdx: 0, isTimerPaused: false });
+    }
     this._timer.updateTimer(this.state.timers[0]);
   };
 
   startTimer = () => {
+    // this.resetButtonPress(); // reset timer
+    this.setState({ isTimerRunning: true });
     this._timer.startCountdown();
   };
 
   stopTimer = () => {
+    this.setState({ isTimerRunning: false, isTimerPaused: true });
     this._timer.stopCountdown();
   };
-
-  // updateWorkTime(newMinutes, newSeconds) {
-  //   newConfig = {
-  //     type: "Work",
-  //     minutes: newMinutes,
-  //     seconds: newSeconds,
-  //   };
-  //   this._timer.updateWorkTime(newConfig);
-  // }
-
-  // updateBreakTime(newMinutes, newSeconds) {
-  //   newConfig = {
-  //     type: "Break",
-  //     minutes: newMinutes,
-  //     seconds: newSeconds,
-  //   };
-  //   this._timer.updateBreakTime(newConfig);
-  // }
 
   render() {
     return (
@@ -122,12 +115,17 @@ export default class App extends React.Component {
               />
               <Controls
                 onStartPausePress={this.startStopButtonPress}
-                onResetPress={this.resetButtonPress}
+                onResetPress={this.resetTimer}
               />
-              {/*<ConfigTimer
-                workTimerData={this.workTimerData}
-                breakTimerData={this.breakTimerData}
-              />*/}
+              {this.state.timers.map((e, idx) => {
+                return (
+                  <ConfigTimerInput
+                    key={idx}
+                    data={e}
+                    onUpdate={this.onUpdateTimerConfig}
+                  />
+                );
+              })}
             </View>
           </ScrollView>
         </SafeAreaView>

@@ -11,7 +11,6 @@ class CountdownTimer extends React.Component {
     });
     this.state = {
       time: fullTime,
-      isRunning: false,
       type: props.time.type,
       timeOverCallback: props.onCountdownComplete,
     };
@@ -52,15 +51,11 @@ class CountdownTimer extends React.Component {
   };
 
   startCountdown = () => {
-    this.setState({ isRunning: true });
     this.timer = setInterval(this.decreaseCount, 1000);
   };
 
-  pauseCountdown = () => {};
-
   stopCountdown = () => {
     clearInterval(this.timer);
-    this.setState({ isRunning: false });
   };
 
   componentWillUnmount() {
@@ -69,16 +64,16 @@ class CountdownTimer extends React.Component {
 
   decreaseCount = () => {
     if (this.state.time === 0) {
-      vibrate();
-      //   clearInterval(this.timer);
       this.state.timeOverCallback();
     } else {
       this.setState((prevState) => ({ time: prevState.time - 1 }));
+      if (this.state.time === 0) {
+        vibrate();
+      }
     }
   };
 
   render() {
-    //   console.log(this.secondsToTimeObject(this.state.time));
     return <ClockView time={this.secondsToTimeObject(this.state.time)} />;
   }
 }
