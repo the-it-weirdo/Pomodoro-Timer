@@ -7,7 +7,7 @@ import {
   Text,
   StatusBar,
 } from "react-native";
-import Timer from "./src/components/Timer";
+import CountdownTimer from "./src/components/CountdownTimer";
 import Controls from "./src/components/Controls";
 import ConfigTimer from "./src/components/ConfigTimer";
 
@@ -38,10 +38,33 @@ export default class App extends React.Component {
         this.updateBreakTime(this._timer.state.config.break.minutes, newSecond);
       },
     };
+
+    this.state = {
+      currentTimerIdx: 0,
+      timers: [
+        { minutes: 0, seconds: 10, type: "work" },
+        { minutes: 0, seconds: 5, type: "break" },
+      ],
+    };
   }
 
+  onCountdownComplete = () => {
+    this.setState(
+      (previousState) => ({
+        currentTimerIdx: previousState.currentTimerIdx + 1,
+      }),
+      () => {
+        this._timer.updateTimer(
+          this.state.timers[
+            this.state.currentTimerIdx % this.state.timers.length
+          ]
+        );
+      }
+    );
+  };
+
   startStopButtonPress = () => {
-    if (this._timer.state.timerRunning) {
+    if (this._timer.state.isRunning) {
       this.stopTimer();
     } else {
       this.startTimer();
@@ -49,39 +72,40 @@ export default class App extends React.Component {
   };
 
   resetButtonPress = () => {
-    this._timer.resetTimer();
+    this.stopTimer();
+    this._timer.updateTimer(this.state.timers[0]);
   };
 
   startTimer = () => {
-    this._timer.startTimer();
+    this._timer.startCountdown();
   };
 
   stopTimer = () => {
-    this._timer.stopTimer();
+    this._timer.stopCountdown();
   };
 
-  updateWorkTime(newMinutes, newSeconds) {
-    newConfig = {
-      type: "Work",
-      minutes: newMinutes,
-      seconds: newSeconds,
-    };
-    this._timer.updateWorkTime(newConfig);
-  }
+  // updateWorkTime(newMinutes, newSeconds) {
+  //   newConfig = {
+  //     type: "Work",
+  //     minutes: newMinutes,
+  //     seconds: newSeconds,
+  //   };
+  //   this._timer.updateWorkTime(newConfig);
+  // }
 
-  updateBreakTime(newMinutes, newSeconds) {
-    newConfig = {
-      type: "Break",
-      minutes: newMinutes,
-      seconds: newSeconds,
-    };
-    this._timer.updateBreakTime(newConfig);
-  }
+  // updateBreakTime(newMinutes, newSeconds) {
+  //   newConfig = {
+  //     type: "Break",
+  //     minutes: newMinutes,
+  //     seconds: newSeconds,
+  //   };
+  //   this._timer.updateBreakTime(newConfig);
+  // }
 
   render() {
     return (
       <>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
         <SafeAreaView>
           <ScrollView
             contentInsetAdjustmentBehavior="automatic"
@@ -89,7 +113,9 @@ export default class App extends React.Component {
           >
             <View style={styles.container}>
               <Text style={styles.appHeaderText}>Pomodoro Timer</Text>
-              <Timer
+              <CountdownTimer
+                time={this.state.timers[this.state.currentTimerIdx]}
+                onCountdownComplete={this.onCountdownComplete}
                 ref={(ref) => {
                   this._timer = ref;
                 }}
@@ -98,10 +124,10 @@ export default class App extends React.Component {
                 onStartPausePress={this.startStopButtonPress}
                 onResetPress={this.resetButtonPress}
               />
-              <ConfigTimer
+              {/*<ConfigTimer
                 workTimerData={this.workTimerData}
                 breakTimerData={this.breakTimerData}
-              />
+              />*/}
             </View>
           </ScrollView>
         </SafeAreaView>
