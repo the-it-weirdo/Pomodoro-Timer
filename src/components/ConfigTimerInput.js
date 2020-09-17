@@ -45,10 +45,11 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    margin: 2,
+    margin: 5,
     padding: 5,
   },
   inputField: {
+    margin: 4,
     borderWidth: 1,
     borderRadius: 4,
     borderColor: "#000",
@@ -56,6 +57,7 @@ const style = StyleSheet.create({
   },
   typeText: {
     fontWeight: "bold",
+    marginHorizontal: 5
   },
 });
 

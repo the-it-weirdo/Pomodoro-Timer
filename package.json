@@ -5,6 +5,7 @@
     "expo": "^35.0.0",
     "prop-types": "^15.6.0",
     "react": "16.8.3",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz"
+    "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
+    "expo-constants": "~7.0.0"
   }
 }

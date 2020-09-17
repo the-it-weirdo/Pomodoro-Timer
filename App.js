@@ -10,6 +10,7 @@ import {
 import CountdownTimer from "./src/components/CountdownTimer";
 import Controls from "./src/components/Controls";
 import ConfigTimerInput from "./src/components/ConfigTimerInput";
+import Constants from "expo-constants";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -85,7 +86,6 @@ export default class App extends React.Component {
   };
 
   startTimer = () => {
-    // this.resetButtonPress(); // reset timer
     this.setState({ isTimerRunning: true });
     this._timer.startCountdown();
   };
@@ -101,8 +101,10 @@ export default class App extends React.Component {
         <StatusBar barStyle="light-content" />
         <SafeAreaView>
           <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'space-between'
+        }}
           >
             <View style={styles.container}>
               <Text style={styles.appHeaderText}>Pomodoro Timer</Text>
@@ -116,6 +118,7 @@ export default class App extends React.Component {
               <Controls
                 onStartPausePress={this.startStopButtonPress}
                 onResetPress={this.resetTimer}
+                isTimerRunning={this.state.isTimerRunning}
               />
               {this.state.timers.map((e, idx) => {
                 return (
@@ -139,10 +142,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
-  scrollView: {
-    backgroundColor: "#f0f0f0",
+  scrollviewContentContainer: {
+    paddingTop: Constants.statusBarHeight,
+    flexGrow: 1,
+    backgroundColor: "#f00",
+    justifyContent: "space-between",
   },
   appHeaderText: {
     fontWeight: "bold",

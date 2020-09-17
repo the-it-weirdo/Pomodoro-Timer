@@ -2,51 +2,28 @@ import React from "react";
 import { StyleSheet, Button, View } from "react-native";
 import PropTypes from "prop-types";
 
-export default class Controls extends React.Component {
-  static propTypes = {
-    onStartPausePress: PropTypes.func.isRequired,
-    onResetPress: PropTypes.func.isRequired,
-  };
+const Controls = (props) => {
+  const startPauseText = props.isTimerRunning ? "Pause" : "Start";
+  return (
+    <View style={style.controlContainer}>
+      <Button
+        style={style.button}
+        onPress={props.onStartPausePress}
+        title={startPauseText}
+      />
+      <Button
+        style={style.button}
+        onPress={props.onResetPress}
+        title="Reset"
+      />
+    </View>
+  );
+};
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      started: false,
-    };
-
-    this.toggleStartPause = this.toggleStartPause.bind(this);
-    this.resetPressed = this.resetPressed.bind(this);
-  }
-
-  toggleStartPause() {
-    this.setState({ started: !this.state.started });
-    this.props.onStartPausePress();
-  }
-
-  resetPressed() {
-    this.setState({ started: false });
-    this.props.onResetPress();
-  }
-
-  render() {
-    const startPauseText = this.state.started ? "Pause" : "Start";
-    return (
-      <View style={style.controlContainer}>
-        <Button
-          style={style.button}
-          onPress={this.toggleStartPause}
-          title={startPauseText}
-        />
-        <Button
-          style={style.button}
-          onPress={this.resetPressed}
-          title="Reset"
-        />
-      </View>
-    );
-  }
-}
+Controls.propTypes = {
+  onStartPausePress: PropTypes.func.isRequired,
+  onResetPress: PropTypes.func.isRequired,
+};
 
 const style = StyleSheet.create({
   controlContainer: {
@@ -62,3 +39,5 @@ const style = StyleSheet.create({
     padding: 5,
   },
 });
+
+export default Controls;
