@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "project1",
-    "description": "This project is really great.",
-    "slug": "project1",
+    "name": "Pomodoro Timer",
+    "description": "A timer based on Pomodoro Technique.",
+    "slug": "pomodoro_timer",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,14 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kingominho.pomodorotimer",
+      "buildNumber": "1.0.0"
+    },
+	
+      "android": {
+      "package": "com.kingominho.pomodorotimer",
+      "versionCode": 1
     }
   }
 }

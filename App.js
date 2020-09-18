@@ -100,26 +100,21 @@ export default class App extends React.Component {
       <>
         <StatusBar barStyle="light-content" />
         <SafeAreaView>
-          <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: 'space-between'
-        }}
-          >
+          <ScrollView contentContainerStyle={styles.scrollviewContentContainer}>
+            <Text style={styles.appHeaderText}>Pomodoro Timer</Text>
+            <CountdownTimer
+              time={this.state.timers[this.state.currentTimerIdx]}
+              onCountdownComplete={this.onCountdownComplete}
+              ref={(ref) => {
+                this._timer = ref;
+              }}
+            />
+            <Controls
+              onStartPausePress={this.startStopButtonPress}
+              onResetPress={this.resetTimer}
+              isTimerRunning={this.state.isTimerRunning}
+            />
             <View style={styles.container}>
-              <Text style={styles.appHeaderText}>Pomodoro Timer</Text>
-              <CountdownTimer
-                time={this.state.timers[this.state.currentTimerIdx]}
-                onCountdownComplete={this.onCountdownComplete}
-                ref={(ref) => {
-                  this._timer = ref;
-                }}
-              />
-              <Controls
-                onStartPausePress={this.startStopButtonPress}
-                onResetPress={this.resetTimer}
-                isTimerRunning={this.state.isTimerRunning}
-              />
               {this.state.timers.map((e, idx) => {
                 return (
                   <ConfigTimerInput
@@ -143,11 +138,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
+    margin: 5,
   },
   scrollviewContentContainer: {
     paddingTop: Constants.statusBarHeight,
     flexGrow: 1,
-    backgroundColor: "#f00",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   appHeaderText: {
@@ -155,5 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 40,
     margin: 7,
     padding: 5,
+    alignSelf: "center",
   },
 });
