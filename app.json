@@ -1,11 +1,17 @@
 {
+  "name": "PomodoroTimer",
+  "displayName": "Pomodoro Timer",
   "expo": {
     "name": "Pomodoro Timer",
     "description": "A timer based on Pomodoro Technique.",
     "slug": "pomodoro_timer",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,10 +25,10 @@
       "bundleIdentifier": "com.kingominho.pomodorotimer",
       "buildNumber": "1.0.0"
     },
-	
-      "android": {
+    "android": {
       "package": "com.kingominho.pomodorotimer",
       "versionCode": 1
-    }
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
