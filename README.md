@@ -13,14 +13,14 @@
 **Pomodoro Timer** is a React Native timer app 📱 based on the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). I started my React Native journey with this app. Long road ahead! 🛣️
 
 
-<table style="width:100%">
+<table style="width:100%" align="center">
   <tr>
     <!-- <th>Splash Screen</th> -->
     <th>Home Screen</th>
   </tr>
   <tr>
     <!-- <td><img src="git_resources/splash_screen.jpeg"/></td> -->
-    <td><img src="git_resources/home.jpeg"/></td>
+    <td><img src="git_resources/home.jpeg" height="750px"/></td>
   </tr>
 </table>
 
