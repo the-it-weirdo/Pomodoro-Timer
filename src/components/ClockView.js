@@ -39,7 +39,6 @@ const padZero = (number) => {
 
 const styles = StyleSheet.create({
   clockviewContainer: {
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
     margin: 5,
