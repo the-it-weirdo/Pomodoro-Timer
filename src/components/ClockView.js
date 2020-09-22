@@ -48,11 +48,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
     margin: 2,
+    color: "#000000",
   },
 
   timeText: {
     fontSize: 35,
     margin: 1,
+    color: "#000000",
   },
 });
 

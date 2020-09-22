@@ -151,5 +151,6 @@ const styles = StyleSheet.create({
     margin: 7,
     padding: 5,
     alignSelf: "center",
+    color: "#000",
   },
 });

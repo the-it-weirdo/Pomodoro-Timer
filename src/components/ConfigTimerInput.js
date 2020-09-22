@@ -57,7 +57,8 @@ const style = StyleSheet.create({
   },
   typeText: {
     fontWeight: "bold",
-    marginHorizontal: 5
+    marginHorizontal: 5,
+    color: "#000000",
   },
 });
 
