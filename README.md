@@ -12,6 +12,10 @@
 
 **Pomodoro Timer** is a React Native timer app 📱 based on the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). I started my React Native journey with this app. Long road ahead! 🛣️
 
+## Inspiration
+Inspiration for this app is taken from [CS50's Mobile App Development with React Native](https://courses.edx.org/courses/course-v1:HarvardX+CS50M+Mobile/course/)
+
+## Screenshot
 
 <table style="width:100%" align="center">
   <tr>
