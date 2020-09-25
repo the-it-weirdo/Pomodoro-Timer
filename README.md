@@ -24,7 +24,7 @@ Inspiration for this app is taken from [CS50's Mobile App Development with React
   </tr>
   <tr>
     <!-- <td><img src="git_resources/splash_screen.jpeg"/></td> -->
-    <td><img src="git_resources/home.jpeg" height="750px"/></td>
+    <td><img src="git_resources/home.jpeg" height="650px"/></td>
   </tr>
 </table>
 
